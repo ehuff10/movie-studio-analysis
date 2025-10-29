@@ -1,0 +1,69 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7976],{24900:function(t,e,r){(window.__NEXT_P=window.__NEXT_P||[]).push(["/chart/moviemeter",function(){return r(95547)}])},38276:function(t,e,r){"use strict";r.d(e,{Q:function(){return a}});var i=r(86054);let n=(t,e)=>({...(0,i.rf)(t.node,e),currentRank:t.currentRank}),a=(t,e)=>(t?.map(t=>n(t,e))||[]).filter(t=>t.titleText&&t.titleId&&t.titleType.id)},89501:function(t,e,r){"use strict";r.d(e,{Z:function(){return a}});var i=r(30382),n=r.n(i);let a=n()`
+    fragment ChartTitleFacetFields on ChartTitleSearchConnection {
+        genres: facet(facetField: GENRES) {
+            filterId
+            text
+            total
+        }
+
+        keywords: facet(facetField: KEYWORDS) {
+            filterId
+            text
+            total
+        }
+
+        watchOptions: facet(facetField: WATCH_PROVIDERS) {
+            filterId
+            text
+            total
+        }
+    }
+`},76671:function(t,e,r){"use strict";function i(t){return t?.map(t=>t.node.id)}function n(t){return{genres:t?.genres??[],keywords:t?.keywords??[],watchOptions:t?.watchOptions??[]}}r.d(e,{J:function(){return i},s:function(){return n}})},95547:function(t,e,r){"use strict";r.r(e),r.d(e,{REF_TAG_PREFIX:function(){return b},__N_SSP:function(){return $},default:function(){return k}});var i=r(52322);r(2784);var n=r(25436),a=r(53665),s=r(19596),o=r(86704),c=r(80554),l=r(12514),d=r(43965),u=r(33782),f=r(82177),h=r(31885),T=r(34231),_=r(48422),m=r(1833),C=r(30382),I=r.n(C),p=r(36543),S=r(89501);I()`
+    query MoviemeterChart(
+        $first: Int!
+        $sort: AdvancedTitleSearchSort
+        $filter: AdvancedTitleSearchConstraints
+        $isInPace: Boolean!
+    ) {
+        chartTitles(
+            first: $first
+            chart: { chartType: MOST_POPULAR_MOVIES }
+            sort: $sort
+            filter: $filter
+        ) {
+            edges {
+                currentRank
+                node {
+                    ...TitleListItemMetadata
+                    ...TitleMeterRanking
+                    ...TitleTopCastAndCrew
+                }
+            }
+
+            ...ChartTitleFacetFields
+        }
+    }
+    ${p.Zz}
+    ${p.vO}
+    ${p.Dl}
+    ${S.Z}
+`;let O=I()`
+    query MoviemeterChartRefiner(
+        $first: Int!
+        $sort: AdvancedTitleSearchSort
+        $filter: AdvancedTitleSearchConstraints
+    ) {
+        chartTitles(
+            first: $first
+            chart: { chartType: MOST_POPULAR_MOVIES }
+            sort: $sort
+            filter: $filter
+        ) {
+            edges {
+                node {
+                    id
+                }
+            }
+        }
+    }
+`;var M=r(38276),E=r(83163),R=r(48687),w=r(76671);let P=(t,e,r,i)=>{let n=(0,R.hg)({weblabID:E.lh.IMDB_WEB_PACE_CREDITS_1201882,treatments:{T1:!0}});return t?{description:i,facetFields:(0,w.s)(t.chartTitles),items:(0,M.Q)(t.chartTitles?.edges,n),name:r,refinedItemIds:(0,w.J)(e?.chartTitles?.edges)}:{description:i,items:[],name:r}};var g=t=>{let{initialFilterProps:e,initialRefinerQueryInfo:r,initialSortProps:n,pageData:s,pageRefinerData:o}=t,C=(0,a.Z)(),I=(0,m.D9)(_.$.CHART_MOVIE_METER),p=(0,T.z)(I),{description:S,items:M,facetFields:E,name:R,refinedItemIds:w}=P(s,o,C.formatMessage(l.w1.MOST_POPULAR_MOVIES),C.formatMessage(l.w2.MOST_POPULAR_MOVIES)),g=(0,d.Yi)(100,C,n);if(0===M.length)return null;let y=C.formatMessage({id:"chart_most_popular_disclaimer",defaultMessage:"Our Most Popular charts use data from the search behavior of IMDb's more than 250 million monthly unique visitors to rank the hottest, most buzzed about movies and TV shows."}),A=(0,u.QU)(s);return(0,i.jsx)(c.V,{belowChartContent:(0,i.jsx)(v,{"data-testid":l.z7.BOTTOM_CONTENT,children:y}),pageDataForStructuredData:A,chartSpecificPageMetadata:{canonicalUrl:I,hrefLangEntries:p},chartSize:100,chartType:h.lZo.Titles,description:S,filterProps:{additionalQueryVariables:{first:100},initialSearchConstraints:e?.searchConstraints,facetFields:E,query:O},initialRefinerQueryInfo:r,initialView:f.c.COMPACT,items:M,name:R,refinedItemsIds:w,showNumberingInConstText:!1,sortByProps:{query:O,sortOptions:g,initialSelectionValue:n?.sortBy??l.Rh.RANKING}})};let v=s.ZP.div.withConfig({componentId:"sc-51d6472c-0"})(["",";"],(0,o.setTypographyType)("bodySmall"));var y=r(87801),A=r(50967),$=!0;let b=y.l.CHART_MOVIEMETER;var k=t=>(0,i.jsx)(A.Z,{baseColor:"baseAlt",hideAdWrap:!0,cti:n.CTIS.CHART_CTI,children:(0,i.jsx)(g,{...t})})}},function(t){t.O(0,[9774,7406,3078,2161,5163,8661,5058,5522,967,634,5079,4538,9096,9179,7644,9031,6054,6221,3318,9341,4477,1403,7948,2888,179],function(){return t(t.s=24900)}),_N_E=t.O()}]);

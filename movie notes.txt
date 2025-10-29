@@ -1,0 +1,53 @@
+ROI by Genre (Cleaned + Sorted)
+What This Graph Tells You:
+
+Genres like Horror, Thriller, Comedy, or Animation may rise to the top
+
+It balances cost vs reward — unlike raw gross
+
+It helps execs spot undervalued genres that give high return on smaller budgets
+
+🧠 Business Summary (2-sentence version):
+
+This chart shows the average ROI per genre for films grossing over $20M since 2015. 
+While Action and Adventure dominate box office totals, genres like Horror and Comedy often 
+deliver higher returns per dollar spent, making them efficient investment targets.
+
+
+
+
+
+
+
+
+
+
+ROI deviation notes to remember 
+
+This graph shows how risky or consistent each movie genre is when it comes to making money.
+
+Each bar is a genre (like Horror or Comedy).
+
+The longer the bar, the more the ROI bounces around — meaning some movies make bank 💸, others totally flop 💀.
+
+The shorter the bar, the more predictable the money is — not huge wins, but not huge losses either.
+
+🎯 So basically:
+
+This graph helps you see which genres are safe bets vs high-risk, high-reward plays.
+
+Want to make $$$ fast? Horror might win.
+Want stability? Go with Animation or Family.
+
+What This Graph Tells You:
+
+A high volatility genre (e.g. Horror) might deliver high ROI — but also lots of flops
+
+A low volatility genre (e.g. Animation, Family) might be safer, even with lower average returns
+
+🧠 Business Insight (2 sentences):
+
+This chart measures how consistent each genre's ROI is by calculating standard deviation. While some genres like Horror offer high upside, 
+they also come with high risk, whereas genres like Animation or Family tend to deliver more predictable, stable returns.
+
+

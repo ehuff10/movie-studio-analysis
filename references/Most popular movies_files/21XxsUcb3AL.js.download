@@ -1,0 +1,177 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+"use strict";
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var ua = navigator.userAgent.toLowerCase();
+var isiPad = ua.indexOf('ipad') > -1 || ua.indexOf('macintosh') > -1 && 'ontouchend' in document;
+var isResponsivePage = !parent.document.getElementById("top_ad");
+var UNITS = ['video-wall'];
+var slotWrapper = null;
+var initDone = false;
+var CustomVideoWall = {
+  expanded: false,
+  init: function init(opts) {
+    var _this = this;
+
+    if (!parent.Tarnhelm || isiPad || initDone) {
+      return false;
+    }
+
+    UNITS.forEach(function (unit) {
+      if (!parent.Tarnhelm.getAdByName(unit)) {
+        return false;
+      }
+    });
+    slotWrapper = parent.document.getElementById("inline20_wrapper") || parent.document.getElementById("top_ad_wrapper");
+    var media = window.top.matchMedia("(max-width: 1023px)");
+    media.addListener(function (x) {
+      if (isResponsivePage && x.matches) {
+        if (_this.expanded) {
+          _this.setCollapsed();
+
+          parent.Tarnhelm.triggerTandemAction({
+            actionName: "route",
+            data: {
+              rotatorConfigs: [{
+                name: "main-rotator",
+                index: 1
+              }]
+            },
+            adName: "video-wall"
+          });
+        }
+
+        resetPage();
+      }
+    });
+    addStyleSheet(".ipc-page-background {\n                overflow: visible;\n            }  \n         .ipc-page-grid, #pagecontent {\n                position: relative;\n            }\n            #top_ad_wrapper {\n                padding-top: 12px !important;\n                margin-bottom: 24px !important;\n            }\n            #inline20_wrapper, #top_ad_wrapper {\n                z-index: 0 !important;\n                -webkit-transition: height .5s cubic-bezier(.215,.61,.355,1);\n                transition:height .5s cubic-bezier(.215,.61,.355,1);\n            }\n            .vw-expanded{\n                height: ".concat(opts && opts.EXPANDED_HEIGHT || 568, "px !important;\n            }\n            .vw-collapsed{\n                height: ").concat(opts && opts.COLLAPSED_HEIGHT || 250, "px !important;\n            }\n "));
+    this.setFrequencyCapping();
+    initDone = true;
+    return initDone;
+  },
+  track: function track(id) {
+    if (typeof id !== 'string' && typeof id !== 'number') {
+      return;
+    }
+
+    var tracker = typeof id === 'string' ? id : 'adCustomAction' + id;
+    var getClickTracker = window.getClickTracker;
+
+    if (!getClickTracker) {
+      try {
+        getClickTracker = parent.Tarnhelm.getAdByName(UNITS[0]).getContainerFrame().contentWindow.getClickTracker;
+      } catch (err) {}
+    }
+
+    if (getClickTracker && typeof getClickTracker === 'function') {
+      new Image().src = getClickTracker(tracker);
+    } else {
+      parent.Tarnhelm.log('couldn\'t track ' + tracker + ', getClickTracker function not found');
+    }
+  },
+  setFrequencyCapping: function setFrequencyCapping() {
+    var _document$ad;
+
+    var ad_utils = window.ad_utils || parent.ad_utils;
+    var ad_id = window.location.protocol === "file:" ? Date.now() : (_document$ad = document.ad) === null || _document$ad === void 0 ? void 0 : _document$ad.cid;
+    var fp = ad_utils.fp || null;
+
+    if (fp && fp.should_autoplay(ad_id)) {
+      this.setExpanded();
+      parent.Tarnhelm.triggerTandemAction({
+        actionName: "route",
+        data: {
+          rotatorConfigs: [{
+            name: "main-rotator",
+            index: 2
+          }]
+        },
+        adName: "video-wall"
+      });
+      fp.log_autoplay(ad_id);
+    } else {
+      this.setCollapsed();
+      parent.Tarnhelm.triggerTandemAction({
+        actionName: "route",
+        data: {
+          rotatorConfigs: [{
+            name: "main-rotator",
+            index: 1
+          }]
+        },
+        adName: "video-wall"
+      });
+    }
+  },
+  setCollapsed: function setCollapsed() {
+    slotWrapper.classList.remove("vw-expanded");
+    slotWrapper.classList.add("vw-collapsed");
+    this.expanded = false;
+  },
+  setExpanded: function setExpanded() {
+    slotWrapper.classList.remove("vw-collapsed");
+    slotWrapper.classList.add("vw-expanded");
+    this.expanded = true;
+  },
+  dateCheckedActions: function dateCheckedActions() {
+    var simulatedDate = new URLSearchParams(parent.location.search).get("simulatedDate");
+    var currentDate = Date.parse(simulatedDate) || Date.now();
+
+    for (var _len = arguments.length, actions = new Array(_len), _key = 0; _key < _len; _key++) {
+      actions[_key] = arguments[_key];
+    }
+
+    var dateChecks = actions.map(function (action) {
+      return Date.parse(action.date) || 0;
+    });
+    var closestDate = dateChecks.sort(function (a, b) {
+      return b - a;
+    }).find(function (date) {
+      return currentDate >= date;
+    });
+    actions.forEach(function (action) {
+      var date = Date.parse(action.date) || 0;
+
+      if (date === closestDate) {
+        setTimeout(function () {
+          parent.Tarnhelm.triggerTandemAction(_objectSpread(_objectSpread({}, {
+            adName: "video-wall"
+          }), action));
+        }, 1);
+      }
+    });
+  }
+};
+
+function addStyleSheet(css) {
+  if (parent.document.getElementById("vw-styles")) {
+    return;
+  }
+
+  var styles = css;
+  var stylesTextNode = parent.document.createTextNode(styles);
+  var stylesheetEl = parent.document.createElement("style");
+  stylesheetEl.type = "text/css";
+  stylesheetEl.id = "vw-styles";
+  stylesheetEl.appendChild(stylesTextNode);
+  parent.document.head.appendChild(stylesheetEl);
+}
+
+function resetPage() {
+  var vwStyles = parent.document.getElementById('vw-styles');
+
+  if (vwStyles) {
+    vwStyles.parentNode.removeChild(vwStyles);
+  }
+
+  slotWrapper.classList.remove('vw-expanded');
+  slotWrapper.classList.remove('vw-collapsed');
+}
+
+parent.CustomVideoWall = CustomVideoWall;
+},{}]},{},[1]);
