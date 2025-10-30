@@ -4,3 +4,13 @@ data/
 Thumbs.db
 __pycache__/
 *.pyc
+
+# --- Saved web pages / reference clutter ---
+references/*_files/
+references/*.download
+references/saved_resource*
+references/*pixel*
+references/*sync*
+references/*.gif
+references/*.jpg
+references/*.png
